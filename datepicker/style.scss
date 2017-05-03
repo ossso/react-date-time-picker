@@ -1,0 +1,368 @@
+@mixin prefix($property, $value) {
+    -webkit-#{$property}: $value;
+    -moz-#{$property}: $value;
+    -ms-#{$property}: $value;
+    #{$property}: $value;
+}
+@mixin flexBox {
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    @include prefix(flex-wrap,wrap);
+    @include prefix(flex-direction,row);
+    @include prefix(justify-content,space-between);
+}
+
+.date-picker-group {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 360px;
+    height: 378px;
+    padding: 20px;
+    margin: -189px 0 0 -180px;
+    background: #fff;
+    box-shadow: 0 3px 33.81px 15.19px rgba(0, 0, 0, 0.05);
+    z-index: 99999999;
+
+    *,
+    *::after,
+    *::before {
+        box-sizing: border-box;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    thead {
+        tr {
+            height: 40px;
+            border-bottom: 1px solid #ddd;
+        }
+        $width: 100%;
+
+        th {
+            width: $width/7;
+            text-align: center;
+            border: 1px solid #ddd;
+            background: #f5f6f7;
+        }
+    }
+
+    tbody {
+        tr {
+            height: 36px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        td {
+            text-align: center;
+            border: 1px solid #ddd;
+            color: #333;
+            cursor: pointer;
+
+            &:hover {
+                background: #f0f0f0;
+            }
+        }
+
+        .not-now-month {
+            color: #bbb;
+
+            &:hover {
+                background: #fff;
+            }
+        }
+
+        .now-date {
+            font-weight: 700;
+            color: #000;
+            background: #f0f0f0;
+        }
+    }
+
+    .options-group {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        height: 30px;
+        margin-top: 10px;
+
+        .option-btn {
+            display: block;
+            position: absolute;
+            top: 0;
+            width: 80px;
+            height: 32px;
+            line-height: 30px;
+            font-size: 14px;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+
+            &:active {
+                @include prefix(transform, scale(.9));
+            }
+        }
+
+        .confirm-btn {
+            right: 0;
+            color: #fff;
+            border: 1px solid #ed3125;
+            background: #ed3125;
+        }
+
+        .cancel-btn {
+            right: 90px;
+            color: #888;
+            border: 1px solid #ccc;
+        }
+    }
+}
+
+.date-picker-year-month {
+    height: 40px;
+    padding: 0 0 10px;
+    margin: 0 -10px;
+    @include flexBox;
+
+    .select-group {
+        position: relative;
+        width: 50%;
+        padding: 0 40px;
+    }
+
+    .select-main {
+        position: absolute;
+        top: 32px;
+        left: 10px;
+        width: 150px;
+        height: 25px*6+20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        background: #fff;
+        box-shadow: 0 0 3px #ddd;
+        @include flexBox;
+
+        .select-item {
+            display: block;
+            width: 50%;
+            height: 25px;
+            line-height: 25px;
+            font-size: 12px;
+            text-align: center;
+            cursor: pointer;
+
+            &.active {
+                background: #f5f5f5;
+            }
+
+            &.none {
+                color: #aaa;
+                cursor: no-drop;
+            }
+        }
+    }
+
+    .year-select {
+        .select-main {
+            height: 25px*6+20px+25px*2;
+            padding: 35px 10px;
+
+            .select-switch {
+                position: absolute;
+                left: 0;
+                width: 100%;
+                height: 25px;
+                background: #f9f9f9;
+                cursor: pointer;
+
+                .arrow {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin-left: -5px;
+                    border-left: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                }
+            }
+
+            .switch-up {
+                top: 0;
+                border-bottom: 1px solid #ddd;
+
+                .arrow {
+                    margin-top: -10px;
+                    border-top: 6px solid transparent;
+                    border-bottom: 8px solid #666;
+                }
+            }
+
+            .switch-down {
+                bottom: 0;
+                border-top: 1px solid #ddd;
+
+                .arrow {
+                    margin-top: -4px;
+                    border-bottom: 6px solid transparent;
+                    border-top: 8px solid #666;
+                }
+            }
+        }
+    }
+
+    .switch-btn {
+        display: block;
+        position: absolute;
+        top: 0;
+        width: 30px;
+        height: 30px;
+        border: 1px solid #ddd;
+        background: #f9f9f9;
+        cursor: pointer;
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            margin-top: -5px;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+        }
+
+        &.prev-btn {
+            left: 10px;
+
+            .arrow {
+                left: 3px;
+                border-left: 6px solid transparent;
+                border-right: 8px solid #666;
+            }
+        }
+
+        &.next-btn {
+            right: 10px;
+
+            .arrow {
+                left: 10px;
+                border-right: 6px solid transparent;
+                border-left: 8px solid #666;
+            }
+        }
+    }
+
+    .value {
+        display: block;
+        position: relative;
+        width: 100%;
+        line-height: 28px;
+        height: 30px;
+        padding-right: 10px;
+        font-size: 14px;
+        text-align: center;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        cursor: pointer;
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            margin-top: -4px;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 6px solid transparent;
+            border-top: 8px solid #666;
+        }
+    }
+}
+
+.date-picker-time-group {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    width: 100%;
+    height: 30px;
+    margin-top: 10px;
+    font-size: 16px;
+
+    & > span {
+        display: inline-block;
+        line-height: 30px;
+    }
+
+    .name {
+        margin-right: 5px;
+    }
+
+    .time-fgf {
+        margin: 0 5px;
+    }
+
+    .value-item {
+        width: 40px;
+        padding-right: 2px;
+        border: 1px solid #ddd;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .value-select {
+        position: absolute;
+        bottom: 33px;
+        left: 0;
+        width: 130px;
+        padding: 25px+4px 4px 4px;
+        border: 1px solid #ddd;
+        background: #fff;
+        z-index: 999;
+        @include flexBox;
+
+        &.minutes {
+            width: 20px*10+10px;
+        }
+
+        .select-item {
+            display: block;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            font-size: 12px;
+            text-align: center;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 25px;
+            line-height: 22px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            background: #f9f9f9;
+
+            .title-name {
+                display: block;
+                line-height: 22px;
+                font-size: 14px;
+                font-weight: normal;
+                color: #000;
+            }
+
+            .close-btn {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 25px;
+                height: 25px;
+                line-height: 25px;
+                font-size: 12px;
+                text-align: center;
+                cursor: pointer;
+            }
+        }
+    }
+}
